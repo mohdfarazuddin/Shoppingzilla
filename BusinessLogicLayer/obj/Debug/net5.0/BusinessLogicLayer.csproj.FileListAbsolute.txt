@@ -1,0 +1,17 @@
+D:\.NET\Shoppingzilla\BusinessLogicLayer\bin\Debug\net5.0\BusinessLogicLayer.deps.json
+D:\.NET\Shoppingzilla\BusinessLogicLayer\bin\Debug\net5.0\BusinessLogicLayer.dll
+D:\.NET\Shoppingzilla\BusinessLogicLayer\bin\Debug\net5.0\ref\BusinessLogicLayer.dll
+D:\.NET\Shoppingzilla\BusinessLogicLayer\bin\Debug\net5.0\BusinessLogicLayer.pdb
+D:\.NET\Shoppingzilla\BusinessLogicLayer\bin\Debug\net5.0\DataAccessLayer.dll
+D:\.NET\Shoppingzilla\BusinessLogicLayer\bin\Debug\net5.0\DTOs.dll
+D:\.NET\Shoppingzilla\BusinessLogicLayer\bin\Debug\net5.0\DataAccessLayer.pdb
+D:\.NET\Shoppingzilla\BusinessLogicLayer\bin\Debug\net5.0\DTOs.pdb
+D:\.NET\Shoppingzilla\BusinessLogicLayer\obj\Debug\net5.0\BusinessLogicLayer.csprojAssemblyReference.cache
+D:\.NET\Shoppingzilla\BusinessLogicLayer\obj\Debug\net5.0\BusinessLogicLayer.GeneratedMSBuildEditorConfig.editorconfig
+D:\.NET\Shoppingzilla\BusinessLogicLayer\obj\Debug\net5.0\BusinessLogicLayer.AssemblyInfoInputs.cache
+D:\.NET\Shoppingzilla\BusinessLogicLayer\obj\Debug\net5.0\BusinessLogicLayer.AssemblyInfo.cs
+D:\.NET\Shoppingzilla\BusinessLogicLayer\obj\Debug\net5.0\BusinessLogicLayer.csproj.CoreCompileInputs.cache
+D:\.NET\Shoppingzilla\BusinessLogicLayer\obj\Debug\net5.0\BusinessLogicLayer.csproj.CopyComplete
+D:\.NET\Shoppingzilla\BusinessLogicLayer\obj\Debug\net5.0\BusinessLogicLayer.dll
+D:\.NET\Shoppingzilla\BusinessLogicLayer\obj\Debug\net5.0\ref\BusinessLogicLayer.dll
+D:\.NET\Shoppingzilla\BusinessLogicLayer\obj\Debug\net5.0\BusinessLogicLayer.pdb

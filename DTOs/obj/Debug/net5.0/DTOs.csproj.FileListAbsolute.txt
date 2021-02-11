@@ -1,0 +1,12 @@
+D:\.NET\Shoppingzilla\DTOs\bin\Debug\net5.0\DTOs.deps.json
+D:\.NET\Shoppingzilla\DTOs\bin\Debug\net5.0\DTOs.dll
+D:\.NET\Shoppingzilla\DTOs\bin\Debug\net5.0\ref\DTOs.dll
+D:\.NET\Shoppingzilla\DTOs\bin\Debug\net5.0\DTOs.pdb
+D:\.NET\Shoppingzilla\DTOs\obj\Debug\net5.0\DTOs.csprojAssemblyReference.cache
+D:\.NET\Shoppingzilla\DTOs\obj\Debug\net5.0\DTOs.GeneratedMSBuildEditorConfig.editorconfig
+D:\.NET\Shoppingzilla\DTOs\obj\Debug\net5.0\DTOs.AssemblyInfoInputs.cache
+D:\.NET\Shoppingzilla\DTOs\obj\Debug\net5.0\DTOs.AssemblyInfo.cs
+D:\.NET\Shoppingzilla\DTOs\obj\Debug\net5.0\DTOs.csproj.CoreCompileInputs.cache
+D:\.NET\Shoppingzilla\DTOs\obj\Debug\net5.0\DTOs.dll
+D:\.NET\Shoppingzilla\DTOs\obj\Debug\net5.0\ref\DTOs.dll
+D:\.NET\Shoppingzilla\DTOs\obj\Debug\net5.0\DTOs.pdb
