@@ -69,3 +69,9 @@ D:\.NET\Shoppingzilla\Shoppingzilla\obj\Debug\net5.0\Shoppingzilla.dll
 D:\.NET\Shoppingzilla\Shoppingzilla\obj\Debug\net5.0\ref\Shoppingzilla.dll
 D:\.NET\Shoppingzilla\Shoppingzilla\obj\Debug\net5.0\Shoppingzilla.pdb
 D:\.NET\Shoppingzilla\Shoppingzilla\obj\Debug\net5.0\Shoppingzilla.genruntimeconfig.cache
+D:\.NET\Shoppingzilla\Shoppingzilla\bin\Debug\net5.0\Azure.Core.dll
+D:\.NET\Shoppingzilla\Shoppingzilla\bin\Debug\net5.0\Azure.Storage.Blobs.dll
+D:\.NET\Shoppingzilla\Shoppingzilla\bin\Debug\net5.0\Azure.Storage.Common.dll
+D:\.NET\Shoppingzilla\Shoppingzilla\bin\Debug\net5.0\Microsoft.Bcl.AsyncInterfaces.dll
+D:\.NET\Shoppingzilla\Shoppingzilla\bin\Debug\net5.0\Microsoft.AspNetCore.Http.Features.dll
+D:\.NET\Shoppingzilla\Shoppingzilla\bin\Debug\net5.0\System.IO.Pipelines.dll

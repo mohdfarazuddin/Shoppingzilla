@@ -1,34 +1,44 @@
-﻿using BusinessLogicLayer.Interfaces;
+﻿using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using BusinessLogicLayer.Interfaces;
 using DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace Shoppingzilla.Controllers
 {
     [Route("api/admin")]
     [ApiController]
-    [Authorize(Roles = "3")]
+    
     public class AdminController : ControllerBase
     {
-        IAdmin _registerservice;
+        IAdmin _adminservice;
+        IUser _userservice;
 
-        public AdminController(IAdmin registerservice)
+        private readonly BlobServiceClient _blobServiceClient;
+        public AdminController(IAdmin adminservice, IUser userservice, BlobServiceClient blobServiceClient)
         {
-            _registerservice = registerservice;
+            _adminservice = adminservice;
+            _userservice = userservice;
+            _blobServiceClient = blobServiceClient;
         }
 
+        [Authorize(Roles = "3")]
         [HttpGet("roles")]
         public async Task<IActionResult> GetRoles()
         {
             try
             {
-                var role = await _registerservice.GetRoles();
+                var role = await _adminservice.GetRoles();
                 return Ok(role);
             }
             catch (Exception e)
@@ -40,17 +50,18 @@ namespace Shoppingzilla.Controllers
             }
         }
 
+        [Authorize(Roles = "3")]
         [HttpGet("roles/{id}")]
         public async Task<IActionResult> GetRole(int id)
         {
             try
             {
-                var role = await _registerservice.GetRole(id);
+                var role = await _adminservice.GetRole(id);
                 return Ok(role);
             }
             catch (Exception e)
             {
-                if (!_registerservice.RoleExists(id))
+                if (!_adminservice.RoleExists(id))
                     return NotFound();
                 if (e.Message.Length > 0)
                     return BadRequest(e.Message);
@@ -59,12 +70,13 @@ namespace Shoppingzilla.Controllers
             }
         }
 
+        [Authorize(Roles = "3")]
         [HttpPost("createrole")]
         public async Task<IActionResult> CreateRole(CreateRoleDTO role)
         {
             try
             {
-                var createrole = await _registerservice.CreateRole(role);
+                var createrole = await _adminservice.CreateRole(role);
                 return CreatedAtAction(nameof(GetRole), new { id = createrole.Id }, createrole);
             }
             catch (Exception e)
@@ -76,12 +88,13 @@ namespace Shoppingzilla.Controllers
             }
         }
 
-        [HttpPost("updateuserrole")]
+        [Authorize(Roles = "3")]
+        [HttpGet("updateuserrole")]
         public async Task<IActionResult> UpdateUserRole(Guid id, int roleid)
         {
             try
             {
-                var user = await _registerservice.UpdateUserRole(id, roleid);
+                var user = await _adminservice.UpdateUserRole(id, roleid);
                 return Ok(user);
             }
             catch (Exception e)
@@ -93,11 +106,11 @@ namespace Shoppingzilla.Controllers
             }
         }
 
-        
+        [Authorize(Roles = "3")]
         [HttpGet("users")]
         public IActionResult GetUsers([FromQuery] int page = 1)
         {
-            var users = _registerservice.GetUsers(page);
+            var users = _adminservice.GetUsers(page);
 
             var metadata = new
             {
@@ -114,31 +127,14 @@ namespace Shoppingzilla.Controllers
             return Ok(users);
         }
 
-        [HttpGet("category/{id}")]
-        public async Task<IActionResult> GetCategory(Guid id)
-        {
-            try
-            {
-                var cat = await _registerservice.GetCategory(id);
-                return Ok(cat);
-            }
-            catch (Exception e)
-            {
-                if (e.Message.Length > 0)
-                    return BadRequest(e.Message);
-                else
-                    throw;
-            }
-        }
-
-
+        [Authorize(Roles = "3")]
         [HttpPost("createcategory")]
         public async Task<IActionResult> CreateCategory(CreateCategoryDTO category)
         {
             try
             {
-                var cat = await _registerservice.CreateCategory(category);
-                return CreatedAtAction(nameof(GetCategory), new { id = cat.Id }, cat);
+                var cat = await _adminservice.CreateCategory(category);
+                return StatusCode(201, cat);
             }
             catch (Exception e)
             {
@@ -149,31 +145,14 @@ namespace Shoppingzilla.Controllers
             }
         }
 
-        [HttpGet("subcategory/{id}")]
-        public async Task<IActionResult> GetSubCategory(Guid id)
-        {
-            try
-            {
-                var scat = await _registerservice.GetSubCategory(id);
-                return Ok(scat);
-            }
-            catch (Exception e)
-            {
-                if (e.Message.Length > 0)
-                    return BadRequest(e.Message);
-                else
-                    throw;
-            }
-        }
-
-
+        [Authorize(Roles = "3")]
         [HttpPost("createsubcategory")]
         public async Task<IActionResult> CreateSubCategory(CreateSubCategoryDTO scategory)
         {
             try
             {
-                var scat = await _registerservice.CreateSubCategory(scategory);
-                return CreatedAtAction(nameof(GetSubCategory), new { id = scat.Id }, scat);
+                var scat = await _adminservice.CreateSubCategory(scategory);
+                return StatusCode(201, scat);
             }
             catch (Exception e)
             {
@@ -184,31 +163,14 @@ namespace Shoppingzilla.Controllers
             }
         }
 
-        [HttpGet("brand/{id}")]
-        public async Task<IActionResult> GetBrand(Guid id)
-        {
-            try
-            {
-                var b = await _registerservice.GetBrand(id);
-                return Ok(b);
-            }
-            catch (Exception e)
-            {
-                if (e.Message.Length > 0)
-                    return BadRequest(e.Message);
-                else
-                    throw;
-            }
-        }
-
-
+        [Authorize(Roles = "3")]
         [HttpPost("createbrand")]
         public async Task<IActionResult> CreateBrand(CreateBrandDTO brand)
         {
             try
             {
-                var b = await _registerservice.CreateBrand(brand);
-                return CreatedAtAction(nameof(GetBrand), new { id = b.Id }, b);
+                var b = await _adminservice.CreateBrand(brand);
+                return StatusCode(201, b);
             }
             catch (Exception e)
             {
@@ -219,31 +181,14 @@ namespace Shoppingzilla.Controllers
             }
         }
 
-        [HttpGet("product/{id}")]
-        public async Task<IActionResult> GetProduct(Guid id)
-        {
-            try
-            {
-                var p = await _registerservice.GetProduct(id);
-                return Ok(p);
-            }
-            catch (Exception e)
-            {
-                if (e.Message.Length > 0)
-                    return BadRequest(e.Message);
-                else
-                    throw;
-            }
-        }
-
-
+        [Authorize(Roles = "3")]
         [HttpPost("createproduct")]
         public async Task<IActionResult> CreateProduct(CreateProductDTO product)
         {
             try
             {
-                var p = await _registerservice.CreateProduct(product);
-                return CreatedAtAction(nameof(GetProduct), new { id = p.Id }, p);
+                var p = await _adminservice.CreateProduct(product);
+                return StatusCode(201, p);
             }
             catch (Exception e)
             {
@@ -254,31 +199,20 @@ namespace Shoppingzilla.Controllers
             }
         }
 
-        [HttpGet("model/{id}")]
-        public async Task<IActionResult> GetModel(Guid id)
-        {
-            try
-            {
-                var m = await _registerservice.GetModel(id);
-                return Ok(m);
-            }
-            catch (Exception e)
-            {
-                if (e.Message.Length > 0)
-                    return BadRequest(e.Message);
-                else
-                    throw;
-            }
-        }
-
-
+        [Authorize(Roles = "3")]
         [HttpPost("createmodel")]
-        public async Task<IActionResult> CreateModel(CreateModelDTO model)
+        public async Task<IActionResult> CreateModel([FromForm] CreateModelDTO formmodel)
         {
             try
             {
-                var m = await _registerservice.CreateModel(model);
-                return CreatedAtAction(nameof(GetModel), new { id = m.Id }, m);
+                IFormFile file = Request.Form.Files[0];
+                var containerClient = _blobServiceClient.GetBlobContainerClient("images");
+                var blobClient = containerClient.GetBlobClient(file.FileName);
+                await blobClient.UploadAsync(file.OpenReadStream(), new BlobHttpHeaders { ContentType = file.ContentType });
+                var url = blobClient.Uri.AbsoluteUri;
+                formmodel.imgurl = url;
+                var m = await _adminservice.CreateModel(formmodel);
+                return StatusCode(201, m);
             }
             catch (Exception e)
             {
@@ -288,6 +222,8 @@ namespace Shoppingzilla.Controllers
                     throw;
             }
         }
+
+        
 
 
     }

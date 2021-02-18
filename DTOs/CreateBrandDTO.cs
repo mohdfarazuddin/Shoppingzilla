@@ -10,6 +10,8 @@ namespace DTOs
     {
         public Guid SubCategoryID { get; set; }
 
+        public Guid CategoryID { get; set; }
+
         public string Name { get; set; }
     }
 }

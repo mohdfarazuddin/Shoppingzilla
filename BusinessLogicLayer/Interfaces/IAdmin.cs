@@ -23,24 +23,13 @@ namespace BusinessLogicLayer.Interfaces
 
         Task<CategoryDTO> CreateCategory(CreateCategoryDTO category);
 
-        Task<CategoryDTO> GetCategory(Guid id);
-
         Task<SubCategoryDTO> CreateSubCategory(CreateSubCategoryDTO subcategory);
-
-        Task<SubCategoryDTO> GetSubCategory(Guid id);
 
         Task<BrandDTO> CreateBrand(CreateBrandDTO brand);
 
-        Task<BrandDTO> GetBrand(Guid id);
-
         Task<ProductDTO> CreateProduct(CreateProductDTO product);
 
-        Task<ProductDTO> GetProduct(Guid id);
-
         Task<ModelDTO> CreateModel(CreateModelDTO model);
-
-        Task<ModelDTO> GetModel(Guid id);
-
 
 
         bool RoleExists(int id);

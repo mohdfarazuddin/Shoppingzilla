@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "UveRYIh/3Aa4hcLr4xh8+7B8EFNyI1b0fRlIlO00yV1D9yoDrdp1yagLD2ZRXEv58vLgSUe8xxEam+hRe5EItQ==",
+  "dgSpecHash": "fFBd6bKt4rbwvasv+DOEmLPOW80ABSQmkWjFvEtp9wyn5kPXJyRz+JNvNbP+/nmAz3KgYIkqLlL5XoteH8A7Ow==",
   "success": true,
   "projectFilePath": "D:\\.NET\\Shoppingzilla\\DTOs\\DTOs.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\mohd.farazuddin\\.nuget\\packages\\microsoft.aspnetcore.http.features\\5.0.3\\microsoft.aspnetcore.http.features.5.0.3.nupkg.sha512",
+    "C:\\Users\\mohd.farazuddin\\.nuget\\packages\\microsoft.extensions.primitives\\5.0.0\\microsoft.extensions.primitives.5.0.0.nupkg.sha512",
+    "C:\\Users\\mohd.farazuddin\\.nuget\\packages\\system.io.pipelines\\5.0.1\\system.io.pipelines.5.0.1.nupkg.sha512"
+  ],
   "logs": []
 }

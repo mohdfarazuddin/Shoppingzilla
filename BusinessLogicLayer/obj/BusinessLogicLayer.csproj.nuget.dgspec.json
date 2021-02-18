@@ -46,6 +46,12 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
+          "dependencies": {
+            "Azure.Storage.Blobs": {
+              "target": "Package",
+              "version": "[12.8.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -174,6 +180,12 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Http.Features": {
+              "target": "Package",
+              "version": "[5.0.3, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

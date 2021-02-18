@@ -86,7 +86,8 @@ namespace BusinessLogicLayer
             return new CategoryDTO
             {
                 Id = category.Id,
-                Name = category.Name
+                Name = category.Name,
+                SubCategories = category.SubCategories.Select(c => c.AsDTO()).ToList()
             };
         }
 
@@ -105,7 +106,8 @@ namespace BusinessLogicLayer
             {
                 Id = subcategory.Id,
                 CategoryID = subcategory.CategoryID,
-                Name = subcategory.Name
+                Name = subcategory.Name,
+                Brands = subcategory.Brands.Select(b => b.AsDTO()).ToList()
             };
         }
 
@@ -114,7 +116,8 @@ namespace BusinessLogicLayer
             return new Brands
             {
                 SubCategoryID = brand.SubCategoryID,
-                Name = brand.Name
+                Name = brand.Name,
+                CategoryID = brand.CategoryID
             };
         }
 
@@ -124,7 +127,9 @@ namespace BusinessLogicLayer
             {
                 Id = brand.Id,
                 SubCategoryID = brand.SubCategoryID,
-                Name = brand.Name
+                Name = brand.Name,
+                CategoryID = brand.CategoryID,
+                Products = brand.Products.Select(b => b.AsDTO()).ToList()
             };
         }
 
@@ -134,7 +139,9 @@ namespace BusinessLogicLayer
             {
                 BrandID = product.BrandID,
                 Name = product.Name,
-                Description = product.Description
+                Description = product.Description,
+                SubCategoryID = product.SubCategoryID,
+                CategoryID = product.CategoryID
             };
         }
 
@@ -145,7 +152,10 @@ namespace BusinessLogicLayer
                 Id = product.Id,
                 BrandID = product.BrandID,
                 Name = product.Name,
-                Description = product.Description
+                Description = product.Description,
+                SubCategoryID = product.SubCategoryID,
+                CategoryID = product.CategoryID,
+                Models = product.Models.Select(m => m.AsDTO()).ToList()
             };
         }
 
@@ -157,7 +167,11 @@ namespace BusinessLogicLayer
                 Colour = model.Colour,
                 Size = model.Size,
                 Stock = model.Stock,
-                Price = model.Price
+                Price = model.Price,
+                imgurl = model.imgurl,
+                BrandID = model.BrandID,
+                SubCategoryID = model.SubCategoryID,
+                CategoryID = model.CategoryID
             };
         }
 
@@ -170,7 +184,12 @@ namespace BusinessLogicLayer
                 Colour = model.Colour,
                 Size = model.Size,
                 Stock = model.Stock,
-                Price = model.Price
+                Price = model.Price,
+                imgurl = model.imgurl,
+                BrandID = model.BrandID,
+                SubCategoryID = model.SubCategoryID,
+                CategoryID = model.CategoryID,
+                Product = model.Product.AsDTO()
             };
         }
 

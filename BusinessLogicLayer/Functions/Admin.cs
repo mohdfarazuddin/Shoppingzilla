@@ -1,4 +1,5 @@
-﻿using BusinessLogicLayer.Interfaces;
+﻿using Azure.Storage.Blobs;
+using BusinessLogicLayer.Interfaces;
 using DataAccessLayer.DataContext;
 using DataAccessLayer.Entities;
 using DTOs;
@@ -16,6 +17,8 @@ namespace BusinessLogicLayer.Functions
     {
 
         private readonly ShoppingzillaDbContext _context = new ShoppingzillaDbContext(ShoppingzillaDbContext.ops.dbOptions);
+
+        
 
         public bool RoleExists(int id)
         {
@@ -58,7 +61,7 @@ namespace BusinessLogicLayer.Functions
             return user.AsDTO();
         }
 
-        public PageList<UserDTO> GetUsers(int page)
+        public PageList<UserDTO> GetUsers(int page = 1)
         {
             var users = PageList<UserDTO>.ToPagedList(_context.UserDetails
                                                 .Include(u => u.Logincredential)
@@ -127,44 +130,7 @@ namespace BusinessLogicLayer.Functions
             return m.AsDTO();
         }
 
-        public async Task<CategoryDTO> GetCategory(Guid id)
-        {
-            var cat = await _context.Categories.FindAsync(id);
-            if (cat == null)
-                throw new Exception("Category not Found");
-            return cat.AsDTO();
-        }
+        
 
-        public async Task<SubCategoryDTO> GetSubCategory(Guid id)
-        {
-            var scat = await _context.SubCategories.FindAsync(id);
-            if (scat == null)
-                throw new Exception("Sub-Category not Found");
-            return scat.AsDTO();
-        }
-
-        public async Task<BrandDTO> GetBrand(Guid id)
-        {
-            var b = await _context.Brands.FindAsync(id);
-            if (b == null)
-                throw new Exception("Brand not Found");
-            return b.AsDTO();
-        }
-
-        public async Task<ProductDTO> GetProduct(Guid id)
-        {
-            var p = await _context.Products.FindAsync(id);
-            if (p == null)
-                throw new Exception("Brand not Found");
-            return p.AsDTO();
-        }
-
-        public async Task<ModelDTO> GetModel(Guid id)
-        {
-            var m = await _context.Models.FindAsync(id);
-            if (m == null)
-                throw new Exception("Brand not Found");
-            return m.AsDTO();
-        }
     }
 }

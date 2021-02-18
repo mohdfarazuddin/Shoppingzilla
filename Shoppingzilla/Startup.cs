@@ -1,3 +1,4 @@
+using Azure.Storage.Blobs;
 using BusinessLogicLayer.Functions;
 using BusinessLogicLayer.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -22,11 +23,13 @@ namespace Shoppingzilla
     public class Startup
     {
         string key;
+        string azureconnectionstring;
 
         readonly string MyPolicy = "_myPolicy";
         public Startup(IConfiguration configuration)
         {
             key = configuration.GetSection("key").Value;
+            azureconnectionstring = configuration.GetValue<string>("AzureBlobStorageConnectionString");
         }
 
         public IConfiguration Configuration { get; }
@@ -55,8 +58,9 @@ namespace Shoppingzilla
                     ValidateLifetime = true
                 };
             });
-            services.AddSingleton<IUser, User>(a => new User(key));
-            services.AddSingleton<IAdmin, Admin>();
+            services.AddTransient<IUser, User>(a => new User(key));
+            services.AddTransient<IAdmin, Admin>();
+            services.AddSingleton(x => new BlobServiceClient(azureconnectionstring));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Shoppingzilla", Version = "v1" });

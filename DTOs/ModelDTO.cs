@@ -12,6 +12,12 @@ namespace DTOs
 
         public Guid ProductID { get; set; }
 
+        public Guid BrandID { get; set; }
+
+        public Guid SubCategoryID { get; set; }
+
+        public Guid CategoryID { get; set; }
+
         public string? Colour { get; set; }
 
         public string? Size { get; set; }
@@ -21,5 +27,7 @@ namespace DTOs
         public int Stock { get; set; }
 
         public string imgurl { get; set; }
+
+        public ProductDTO Product { get; set; }
     }
 }

@@ -11,6 +11,12 @@ namespace DataAccessLayer.Entities
 
         public Guid ProductID { get; set; }
 
+        public Guid BrandID { get; set; }
+
+        public Guid SubCategoryID { get; set; }
+
+        public Guid CategoryID { get; set; }
+
         public string? Colour { get; set; }
 
         public string? Size { get; set; }

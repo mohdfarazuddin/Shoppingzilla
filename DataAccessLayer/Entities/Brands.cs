@@ -11,6 +11,8 @@ namespace DataAccessLayer.Entities
 
         public Guid SubCategoryID { get; set; }
 
+        public Guid CategoryID { get; set; }
+
         public string Name { get; set; }
 
         public SubCategories SubCategory { get; set; }

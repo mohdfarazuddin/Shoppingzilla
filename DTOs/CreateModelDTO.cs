@@ -8,7 +8,14 @@ namespace DTOs
 {
     public class CreateModelDTO
     {
+
         public Guid ProductID { get; set; }
+
+        public Guid BrandID { get; set; }
+
+        public Guid SubCategoryID { get; set; }
+
+        public Guid CategoryID { get; set; }
 
         public string? Colour { get; set; }
 
@@ -19,5 +26,6 @@ namespace DTOs
         public int Stock { get; set; }
 
         public string imgurl { get; set; }
+
     }
 }

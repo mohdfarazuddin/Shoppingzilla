@@ -13,6 +13,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
+using System.Collections.Generic;
 
 namespace BusinessLogicLayer.Functions
 {
@@ -157,12 +158,152 @@ namespace BusinessLogicLayer.Functions
             return refreshToken;
         }
 
-        public async Task logout(Guid id)
+        public async Task logout(string jwt)
         {
-            var rt = await _context.RefreshTokens.FindAsync(id);
+            var tokenHandler = new JwtSecurityTokenHandler();
+            SecurityToken validatedToken;
+            var principal = tokenHandler.ValidateToken(jwt,
+                new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key)),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = true
+                }, out validatedToken);
+            var jwtToken = validatedToken as JwtSecurityToken;
+            if (jwtToken == null || !jwtToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+                throw new SecurityTokenException("Token is Invalid");
+            var id = jwtToken.Claims.ToList()[0].Value;
+            var rt = await _context.RefreshTokens.FindAsync(new Guid(id));
             _context.RefreshTokens.Remove(rt);
             await _context.SaveChangesAsync();
             return;
         }
+
+        public async Task<Boolean> Isloggedin(string jwt)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            SecurityToken validatedToken;
+            var principal = tokenHandler.ValidateToken(jwt,
+                new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key)),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = true
+                }, out validatedToken);
+            var jwtToken = validatedToken as JwtSecurityToken;
+            if (jwtToken == null || !jwtToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+                throw new SecurityTokenException("Token is Invalid");
+            var id = jwtToken.Claims.ToList()[0].Value;
+            var u = await _context.RefreshTokens.FindAsync(new Guid(id));
+            if(u == null)
+                return false;
+            return true;
+        }
+
+        public async Task<CategoryDTO> GetCategory(Guid id)
+        {
+            var cat = await _context.Categories.FindAsync(id);
+            if (cat == null)
+                throw new Exception("Category not Found");
+            return cat.AsDTO();
+        }
+
+        public async Task<SubCategoryDTO> GetSubCategory(Guid id)
+        {
+            var scat = await _context.SubCategories.FindAsync(id);
+            if (scat == null)
+                throw new Exception("Sub-Category not Found");
+            return scat.AsDTO();
+        }
+
+        public async Task<BrandDTO> GetBrand(Guid id)
+        {
+            var b = await _context.Brands.FindAsync(id);
+            if (b == null)
+                throw new Exception("Brand not Found");
+            return b.AsDTO();
+        }
+
+        public async Task<ProductDTO> GetProduct(Guid id)
+        {
+            var p = await _context.Products.FindAsync(id);
+            if (p == null)
+                throw new Exception("Brand not Found");
+            return p.AsDTO();
+        }
+
+        public async Task<ModelDTO> GetModel(Guid id)
+        {
+            var m = await _context.Models.FindAsync(id);
+            if (m == null)
+                throw new Exception("Brand not Found");
+            return m.AsDTO();
+        }
+
+        public async Task<List<CategoryDTO>> GetCategories()
+        {
+            var categories = await _context.Categories.OrderBy(c => c.Name).Select(c => c.AsDTO()).ToListAsync();
+            return categories;
+        }
+
+        public async Task<List<SubCategoryDTO>> GetSubCategories(Guid id)
+        {
+            var subcategories = await _context.SubCategories.Where(sc => sc.CategoryID == id)
+                                    .OrderBy(sc => sc.Name).Select(sc => sc.AsDTO()).ToListAsync();
+            return subcategories;
+        }
+
+        public async Task<List<BrandDTO>> GetBrands(Guid id)
+        {
+            var brands = await _context.Brands.Where(b => b.SubCategoryID == id)
+                                    .OrderBy(b => b.Name).Select(b => b.AsDTO()).ToListAsync();
+            return brands;
+        }
+
+        public async Task<List<ProductDTO>> GetProducts(Guid id)
+        {
+            var products = await _context.Products.Where(p => p.BrandID == id)
+                                    .OrderBy(p => p.Name).Select(p => p.AsDTO()).ToListAsync();
+            return products;
+        }
+
+        public async Task<List<ModelDTO>> GetModels(Guid id)
+        {
+            var models = await _context.Models.Where(m => m.ProductID == id)
+                                    .OrderBy(m => m.Price).Select(m => m.AsDTO()).ToListAsync();
+            return models;
+        }
+
+        public async Task<List<ProductDTO>> GetProductsbycat(Guid id)
+        {
+            var products = await _context.Products.Where(p => p.CategoryID == id).Include(p => p.Models)
+                                    .OrderBy(p => p.Name).Select(p => p.AsDTO()).ToListAsync();
+            return products;
+        }
+
+        public async Task<List<ProductDTO>> GetProductsbyscat(Guid id)
+        {
+            var products = await _context.Products.Where(p => p.SubCategoryID == id).Include(p => p.Models)
+                                    .OrderBy(p => p.Name).Select(p => p.AsDTO()).ToListAsync();
+            return products;
+        }
+
+        public async Task<List<ProductDTO>> GetProductsbybrand(Guid id)
+        {
+            var products = await _context.Products.Where(p => p.BrandID == id).Include(p => p.Models)
+                                    .OrderBy(p => p.Name).Select(p => p.AsDTO()).ToListAsync();
+            return products;
+        }
+
+        public async Task<ProductDTO> GetProductbyid(Guid id)
+        {
+            var product = await _context.Products.Include(p => p.Models).FirstOrDefaultAsync(p => p.Id == id);
+            return product.AsDTO();
+        }
+
     }
 }
